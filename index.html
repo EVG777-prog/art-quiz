@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Art-quiz</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/categories.css">
+    <link rel="stylesheet" href="styles/game1.css">
+    <link rel="stylesheet" href="styles/game2.css">
+    <link rel="stylesheet" href="styles/result.css">
+</head>
+
+<body>
+    <section id="main" class="none">
+        <h1>ArtQuiz</h1>
+        <div class="container main">
+            <div id="game-artist" class="container vert change-game"></div>
+            <div id="game-pictures" class="container vert change-game"></div>
+
+        </div>
+    </section>
+    <section id="categories-game1" class="none">
+        <div class="container head">
+            <button class="btn-nav home">Главная</button>
+            <div class="text-question">Угадай автора картины</div>
+
+        </div>
+
+        <div class="container stages">
+
+        </div>
+    </section>
+    <section id="categories-game2" class="none">
+        <div class="container head">
+            <button class="btn-nav home">HOME</button>
+            <div class="text-question">Угадай картину</div>
+        </div>
+        <div class="container stages">
+
+        </div>
+    </section>
+    <section id="game1">
+        <div class="container head">
+            <button class="btn-nav home">Главная</button>
+            <div class="text-question">Кто автор данной картины?</div>
+            <button class="btn-nav category1">Этапы</button>
+        </div>
+
+        <div class="container picture-artist">
+            <img src="/Assets/Img/full/0full.jpg" alt="Picture">
+        </div>
+        <div class="container dots">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+        <div class="container answers-artist">
+            <div class="answer" data-answer="0">Option 1</div>
+            <div class="answer" data-answer="1">Option 2</div>
+            <div class="answer" data-answer="2">Option 3</div>
+            <div class="answer" data-answer="3">Option 4</div>
+        </div>
+    </section>
+    <section id="game2">
+        <div class="container head">
+            <button class="btn-nav home">Главная</button>
+            <div class="text-question">Какую картину написал *******?</div>
+            <button class="btn-nav category2">Этапы</button>
+        </div>
+
+        <div class="container pictures4">
+            <img src="/Assets/Img/full/0full.jpg" alt="Picture1">
+            <img src="/Assets/Img/full/1full.jpg" alt="Picture2">
+            <img src="/Assets/Img/full/2full.jpg" alt="Picture3">
+            <img src="/Assets/Img/full/3full.jpg" alt="Picture4">
+        </div>
+        <div class="container dots">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+    </section>
+    <section id="setting" class="none">
+        <div class="container head">
+
+            <div class="text-question">Настройки</div>
+        </div>
+        <div class="container stages">
+
+        </div>
+    </section>
+    <div class="result">
+        <div class="text-head">Поздравляем!</div>
+        <div class="text-result">4 / 10</div>
+        <img src="/Assets/Img/smile-glasses.png" alt="Smile">
+        <div class="container">
+            <button class="btn-nav home">Главная</button>
+            <button class="btn-nav next-quiz">Следующий этап</button>
+        </div>
+
+    </div>
+    <script src="src/script.js" type="module"></script>
+</body>
+
+</html>
