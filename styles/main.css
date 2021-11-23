@@ -10,6 +10,23 @@ body {
     background-color:gainsboro;
 }
 
+#heading {
+    font-size: 50px;
+}
+
+a {
+    font-size: 30px;
+    text-decoration: none;
+}
+
+a[name=rsschool] {
+    background-image: url("/Assets/Svg/rs_school_js.svg");
+    background-repeat:no-repeat;
+    width: 150px;
+    height: 50px;
+}
+
+
 .container {
     display: flex;
     justify-content: center;
@@ -20,12 +37,24 @@ body {
     flex-direction: column;
 }
 .container.main {
-    border: 3px solid blue;
+    /* border: 3px solid blue; */
     width: 100%;
     max-width: 1000px;
     justify-content: space-between;
     margin-left: auto;
     margin-right: auto;
+
+}
+.container.footer {
+    /* border: 3px solid blue; */
+    width: 100%;
+    max-width: 800px;
+    justify-content: space-between;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+
+
 }
 
 .change-game {
@@ -33,7 +62,7 @@ body {
     max-width: 500px;
     height: 40%;
     min-height: 400px;
-    border: 3px solid red;
+    border: 1px solid black;
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -88,7 +117,9 @@ h1 {
 }
 
 section {
-    border: 3px solid black;
+    /* border: 3px solid black; */
     width: 100%;
-    height: 100%;
+  
+    height: 100vh;
+    align-content: space-between;
 }

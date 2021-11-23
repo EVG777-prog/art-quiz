@@ -238,7 +238,7 @@ function showQuestion(num) {
     hideResultPopUp();
     // окрашиваем варианты ответов в бирюзовый
     const answers = sectionGame1.querySelectorAll('.answer');
-    console.log(answers);
+
     answers.forEach((el) => {
         el.style.backgroundColor = 'aquamarine';
     });
