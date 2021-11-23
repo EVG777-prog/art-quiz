@@ -4,7 +4,7 @@
     max-width: 800px;
     height: 500px;
     overflow: hidden;
-    border: 3px solid red;
+    /* border: 3px solid red; */
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -21,3 +21,9 @@
     border: 5px solid blue;
 }
 
+#game2 .text-question {
+    font-size: 30px;
+}
+#game2 .container {
+    max-width: 800px;
+}

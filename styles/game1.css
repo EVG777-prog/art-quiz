@@ -6,15 +6,12 @@
     max-width: 800px;
     margin-left: auto;
     margin-right: auto;
-    text-align: left;
-    font-size: 30px;
+    text-align: center;
+    font-size: 20px;
     font-weight: bold;
     color:blueviolet;
 }
 
-#heading {
-    font-size: 50px;
-}
 
 .picture-artist {
     margin-left: auto;
@@ -22,7 +19,7 @@
     max-width: 1000px;
     height: 500px;
     overflow: hidden;
-    border: 3px solid red;
+    /* border: 3px solid red; */
 }
 .picture-artist img {
     /* width: 100%; */
@@ -32,27 +29,25 @@
 .answers-artist {
     height: 100px;
     max-width: 1000px;
-    border: 3px solid red;
+    /* border: 3px solid red; */
     margin-left: auto;
     margin-right: auto;
     display: flex;
     flex-wrap: wrap;
 }
 
-
-
 .answer {
     padding-left: 50px;
-    border: 3px solid red;
-    font-size: 40px;
-    width: 50%;
+    border: 3px solid gray;
+    border-radius: 10px;
+    font-size: 30px;
+    width: 40%;
     background-color:aquamarine;
     cursor: pointer;
+    margin-left: 20px;
 }
 .answer:hover {
-
     background-color:cadetblue;
-
 }
 
 .dots {

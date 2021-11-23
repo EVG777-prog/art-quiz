@@ -72,8 +72,6 @@ popUpSetting.querySelector('input[name=timer]').addEventListener('input', (el) =
     }
 });
 
-console.log(popUpSetting.querySelector('input[name=volume]'));
-
 // LocalStorage
 class LocalStorage {
     constructor() {
@@ -197,8 +195,7 @@ options.forEach((el) => {
         currentQuestion++;
         countQuestions++;
         if (countQuestions < 10) {
-            setTimeout(showQuestion, 1000, currentQuestion);
-            // showQuestion(currentQuestion);
+            showQuestion(currentQuestion);
             console.log(dotsArray);
         }
         if (countQuestions === 10) {
