@@ -6,8 +6,9 @@ const sectionCategoriesGame1 = document.querySelector('section[id="categories-ga
 const sectionCategoriesGame2 = document.querySelector('section[id="categories-game2"]');
 const sectionGame1 = document.querySelector('section[id="game1"]');
 const sectionGame2 = document.querySelector('section[id="game2"]');
-const setting = document.querySelector('section[id="setting"]');
+const popUpSetting = document.querySelector('.setting');
 const popUpResult = document.querySelector('.result');
+const audio = document.querySelectorAll('audio');
 
 let currentQuestion = 0;
 let countQuestions = 0;
@@ -16,23 +17,64 @@ let dotsArray;
 // вешаем обработчики на кнопки
 document.querySelectorAll('.btn-nav.home').forEach((el) => {
     el.addEventListener('click', () => {
+        sound.bonk();
         showSection(sectionMain);
     });
 });
 document.querySelectorAll('.btn-nav.category1').forEach((el) => {
     el.addEventListener('click', () => {
+        sound.bonk();
         showSection(sectionCategoriesGame1);
     });
 });
 document.querySelectorAll('.btn-nav.category2').forEach((el) => {
     el.addEventListener('click', () => {
+        sound.bonk();
         showSection(sectionCategoriesGame2);
     });
 });
+document.querySelector('.next-quiz').addEventListener('click', (el) => {
+    if (currentQuestion < 120) {
+        sound.bonk();
+        startGame1(currentQuestion);
+    } else {
+        sound.bonk();
+        startGame2(currentQuestion);
+    }
+});
+document.querySelectorAll('.btn-setting').forEach((el) => {
+    el.addEventListener('click', (el) => {
+        sound.bonk();
+        showSettingPopUp();
+    });
+});
+popUpSetting.querySelector('.reset').addEventListener('click', (el) => {
+    sound.bonk();
+    setting.reset();
+});
+popUpSetting.querySelector('.save').addEventListener('click', (el) => {
+    sound.bonk();
+    setting.save();
+    hideSettingPopUp();
+});
+popUpSetting.querySelector('input[name=volume]').addEventListener('input', (el) => {
+    if (el.target.value == 0) {
+        popUpSetting.querySelector('.setting img[name=volume]').src = "/Assets/Svg/mute.svg";
+    } else {
+        popUpSetting.querySelector('.setting img[name=volume]').src = "/Assets/Svg/volume.svg";
+    }
+});
+popUpSetting.querySelector('input[name=timer]').addEventListener('input', (el) => {
+    if (el.target.value == 0) {
+        popUpSetting.querySelector('.setting img[name=timer]').style.opacity = '0.3';
+    } else {
+        popUpSetting.querySelector('.setting img[name=timer]').style.opacity = '1.0';
+    }
+});
 
+console.log(popUpSetting.querySelector('input[name=volume]'));
 
 // LocalStorage
-
 class LocalStorage {
     constructor() {
         if (!localStorage.getItem('scores')) {
@@ -59,9 +101,55 @@ class LocalStorage {
 
 const scores = new LocalStorage();
 
+// класс Настройки
+class Setting {
+    constructor() {
+        this.timerTime = localStorage.getItem('timerTime') || 20;
+        this.timerOn = localStorage.getItem('timerOn') || false;
+        this.volume = localStorage.getItem('volume') || 50;
+        this.volumeOn = localStorage.getItem('volumeOn') || false;
+    }
+    // переносим настройки в окно
+    show() {
+        if (this.timerOn) {
+            popUpSetting.querySelector('.setting img[name=timer]').style.opacity = '1.0';
+            popUpSetting.querySelector('.setting input[name=timer]').value = `${this.timerTime}`;
+        } else {
+            popUpSetting.querySelector('.setting img[name=timer]').style.opacity = '0.3';
+            popUpSetting.querySelector('.setting input[name=timer]').value = `0`;
+        }
+        if (this.volumeOn) {
+            popUpSetting.querySelector('.setting img[name=volume]').src = "/Assets/Svg/volume.svg";
+            popUpSetting.querySelector('.setting input[name=volume]').value = `${this.volume}`;
+        } else {
+            popUpSetting.querySelector('.setting img[name=volume]').src = "/Assets/Svg/mute.svg";
+            popUpSetting.querySelector('.setting input[name=volume]').value = `0`;
+        }
+    }
+    reset() {
+        this.timerTime = 20;
+        this.timerOn = false;
+        this.volume = 50;
+        this.volumeOn = false;
+        this.show();
+    }
+    save() {
+        this.timerTime = +popUpSetting.querySelector('.setting input[name=timer]').value;
+        this.timerOn = this.timerTime > 0;
+        this.volume = +popUpSetting.querySelector('.setting input[name=volume]').value;
+        this.volumeOn = this.volume > 0;
+        localStorage.setItem('timerTime', this.timerTime);
+        localStorage.setItem('timerOn', this.timerOn);
+        localStorage.setItem('volume', this.volume);
+        localStorage.setItem('volumeOn', this.volumeOn);
+    }
+}
+
+let setting = new Setting();
 
 // PopUp результаты игры
 function showResultPopUp() {
+
     console.log(dotsArray);
     // формируем содержание окна в зависимости от результата
     const result = dotsArray.filter((el) => el === true).length;
@@ -70,13 +158,23 @@ function showResultPopUp() {
 
     document.querySelector('.text-result').textContent = `${result} / 10`;
 
-    // показіваем окно
+    // показываем окно
     popUpResult.style.left = 'calc(50% - 200px)';
+    sound.win();
 }
 function hideResultPopUp() {
     popUpResult.style.left = '-1000px';
 }
 
+// PopUp настройки
+function showSettingPopUp() {
+    setting.show();
+    // показываем окно
+    popUpSetting.style.left = 'calc(50% - 200px)';
+}
+function hideSettingPopUp() {
+    popUpSetting.style.left = '-1000px';
+}
 
 // Игра1 - угадай автора картины
 const options = document.querySelectorAll('.answer'); // поля с ответами
@@ -84,9 +182,11 @@ const dots = sectionGame1.querySelectorAll('.dot'); // поля с ответа�
 
 options.forEach((el) => {
     el.addEventListener('click', () => {
+
         console.log(el.textContent);
 
         if (countQuestions < 10) {
+            sound.bonk2();
             const result = el.textContent === images[ currentQuestion ].author;
             // окрашиваем фон ответа в зависимости от ответа (зеленый/красный)
             result ? el.style.backgroundColor = 'green' : el.style.backgroundColor = 'red';
@@ -102,6 +202,7 @@ options.forEach((el) => {
             console.log(dotsArray);
         }
         if (countQuestions === 10) {
+            sound.bonk2();
             showResultPopUp();
             const indexArray = (currentQuestion - 10) / 10;
             scores.result[ indexArray ] = dotsArray;
@@ -133,6 +234,8 @@ function showDotsGame1() {
 
 // показать новый вопрос (картину и варианты ответов)
 function showQuestion(num) {
+    // скрываем окно результатов, если есть
+    hideResultPopUp();
     // окрашиваем варианты ответов в бирюзовый
     const answers = sectionGame1.querySelectorAll('.answer');
     console.log(answers);
@@ -305,6 +408,7 @@ optionsGame2.forEach((el) => {
             console.log(dotsArray);
         }
         if (countQuestions === 10) {
+            showResultPopUp();
             const indexArray = (currentQuestion - 10) / 10;
             scores.result[ indexArray ] = dotsArray;
             scores.saveLS();
@@ -336,6 +440,9 @@ function showDotsGame2() {
 
 // показать новый вопрос (картину и варианты ответов)
 function showQuestionGame2(num) {
+    // скрываем окно результатов, если есть
+    hideResultPopUp();
+
     const optionsAnswers = getOptionsAnswersGame2(num);          // получаем варианты ответов
     let i = 0;
     optionsGame2.forEach((el) => {
@@ -370,4 +477,25 @@ function getOptionsAnswersGame2(num) {
 }
 
 
+// Звуки
+class Sound {
+    win() {
+        audio[ 4 ].volume = setting.volumeOn ? setting.volume / 100 : 0;
+        audio[ 4 ].play();
+    }
+    lose() {
+        audio[ 3 ].volume = setting.volumeOn ? setting.volume / 100 : 0;
+        audio[ 3 ].play();
+    }
+    bonk() {
+        audio[ 0 ].volume = setting.volumeOn ? setting.volume / 100 : 0;
+        audio[ 0 ].play();
+    }
+    bonk2() {
+        audio[ 1 ].volume = setting.volumeOn ? setting.volume / 100 : 0;
+        audio[ 1 ].play();
+    }
+}
+
+const sound = new Sound();
 
